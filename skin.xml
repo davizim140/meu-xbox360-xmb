@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Skin Name="XMB_PS3_Style" Author="Você" Version="1.0">
+    
+    <!-- Configuração da Tela Principal -->
+    <Window id="MainScene" width="1280" height="720">
+        
+        <!-- COR DE FUNDO: Azul Escuro Clássico do PlayStation -->
+        <BackgroundColor color="FF101428" />
+
+        <!-- 1. EIXO HORIZONTAL: Categorias da XMB (Configurações, Jogos, Sistema) -->
+        <HorizontalList id="XmbCategories" x="200" y="200" spacing="150" alignment="Center">
+            <Item id="CatSettings" text="Configurações" icon="icon_settings.png" />
+            <Item id="CatGames" text="Meus Jogos" icon="icon_games.png" active="true" />
+            <Item id="CatSystem" text="Desligar" icon="icon_power.png" />
+        </HorizontalList>
+
+        <!-- 2. EIXO VERTICAL: Lista de Jogos do Xbox 360 (Abaixo da categoria ativa) -->
+        <!-- O Aurora vai alinhar os seus jogos instalados um embaixo do outro -->
+        <VerticalList id="GameListView" x="350" y="320" spacing="70" maxItems="5">
+            <ItemTemplate>
+                <!-- Ícone ou Capa do Jogo em miniatura quadrada à esquerda -->
+                <Image id="GameIcon" width="50" height="50" x="0" y="0" default="default_icon.png" />
+                
+                <!-- Nome do Jogo alinhado ao lado do ícone -->
+                <Text id="GameTitle" x="70" y="12" font="Arial" size="26" color="FFFFFFFF" />
+            </ItemTemplate>
+        </VerticalList>
+
+        <!-- Informações Adicionais na Tela (Estilo Relógio do PS3 no topo superior direito) -->
+        <Text id="ClockDisplay" x="1100" y="50" font="Arial" size="20" color="80FFFFFF" text="{SystemTime}" />
+
+    </Window>
+</Skin>
