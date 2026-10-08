@@ -1,0 +1,25 @@
+name: Compilar Dashboard Xbox 360
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar codigo do repositorio
+      uses: actions/checkout@v4
+
+    - name: Instalar Compilador do Xbox 360 (PowerPC)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-powerpc-linux-gnu build-essential libelf-dev
+
+    - name: Compilar o arquivo .ELF
+      run: make
+
+    - name: Disponibilizar arquivo para Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: dashboard-xbox360
+        path: xbox_dash.elf
