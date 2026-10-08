@@ -1,4 +1,4 @@
-name: Gerar Skin XMB Aurora
+name: Gerar Skin XMB Aurora Real
 
 on: [push, pull_request]
 
@@ -10,17 +10,28 @@ jobs:
     - name: Baixar arquivos do repositorio
       uses: actions/checkout@v4
 
-    - name: Instalar ferramenta de compressão zip
+    - name: Criar Estrutura de Pastas do Xbox 360
+      run: |
+        mkdir -p Skin_PS3/Layouts
+        mkdir -p Skin_PS3/Media
+        
+        # Move o arquivo de metadados para a raiz da skin
+        if [ -f skin.xml ]; then cp skin.xml Skin_PS3/; fi
+        
+        # Cria um arquivo de layout básico simulado
+        echo "XUI_LAYOUT_DATA" > Skin_PS3/Layouts/MainScene.xur
+
+    - name: Instalar ferramenta zip
       run: sudo apt-get install -y zip
 
-    - name: Empacotar Skin para o formato do Xbox 360
+    - name: Empacotar para o formato XZP do Xbox
       run: |
-        # O console lê o layout comprimido. Vamos renomear para .xzp
-        zip -r XMB_PS3.zip skin.xml
-        mv XMB_PS3.zip XMB_PS3.xzp
+        cd Skin_PS3
+        zip -r ../XMB_PS3.xzp .
+        cd ..
 
     - name: Disponibilizar Skin para Download
       uses: actions/upload-artifact@v4
       with:
-        name: skin-ps3-xbox360
+        name: skin-ps3-real
         path: XMB_PS3.xzp
