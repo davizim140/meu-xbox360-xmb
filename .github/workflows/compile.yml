@@ -1,4 +1,4 @@
-name: Compilar Dashboard Xbox 360
+name: Gerar Skin XMB Aurora
 
 on: [push, pull_request]
 
@@ -7,19 +7,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Baixar codigo do repositorio
+    - name: Baixar arquivos do repositorio
       uses: actions/checkout@v4
 
-    - name: Instalar Compilador do Xbox 360 (PowerPC)
+    - name: Instalar ferramenta de compressão zip
+      run: sudo apt-get install -y zip
+
+    - name: Empacotar Skin para o formato do Xbox 360
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-powerpc-linux-gnu build-essential libelf-dev
+        # O console lê o layout comprimido. Vamos renomear para .xzp
+        zip -r XMB_PS3.zip skin.xml
+        mv XMB_PS3.zip XMB_PS3.xzp
 
-    - name: Compilar o arquivo .XEX
-      run: make
-
-    - name: Disponibilizar arquivo para Download
+    - name: Disponibilizar Skin para Download
       uses: actions/upload-artifact@v4
       with:
-        name: dashboard-xbox360
-        path: xbox_dash.xex
+        name: skin-ps3-xbox360
+        path: XMB_PS3.xzp
