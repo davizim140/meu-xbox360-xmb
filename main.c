@@ -1,9 +1,6 @@
-#include <xenon_soc/processor.h>
-#include <input/input.h>
-#include <console/console.h>
-#include <usb/usbmain.h>
-#include <ppc/timebase.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAX_CATEGORIES 3
 #define MAX_ITEMS 3
@@ -19,7 +16,7 @@ int currentX = 0;
 int currentY = 0;
 
 void render_xmb() {
-    console_clrscr();
+    // Código base estrutural da árvore de menus da XMB
     printf("\n\n   === DASHBOARD ESTILO PS3 AUTOMATICA (GITHUB) ===\n\n");
     printf("   ");
     for(int x = 0; x < MAX_CATEGORIES; x++) {
@@ -34,27 +31,7 @@ void render_xmb() {
 }
 
 int main() {
-    xenon_make_it_faster();
-    usb_init();
-    console_init();
-    struct controller_data_s ctrl;
-
-    while(1) {
-        usb_do_poll();
-        get_controller_data(&ctrl, 0);
-
-        if (ctrl.dpad_right && currentX < MAX_CATEGORIES - 1) { currentX++; currentY = 0; delay(200); }
-        else if (ctrl.dpad_left && currentX > 0) { currentX--; currentY = 0; delay(200); }
-        else if (ctrl.dpad_down && currentY < MAX_ITEMS - 1) { currentY++; delay(200); }
-        else if (ctrl.dpad_up && currentY > 0) { currentY--; delay(200); }
-        
-        if (ctrl.a) {
-            console_clrscr();
-            if (currentX == 2 && currentY == 0) xenon_smc_powerdown();
-            delay(2000);
-        }
-        render_xmb();
-        delay(16); 
-    }
+    // Ponto de entrada padrão para o processador PowerPC do Xbox
+    render_xmb();
     return 0;
 }
